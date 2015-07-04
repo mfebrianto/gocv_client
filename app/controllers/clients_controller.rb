@@ -1,7 +1,13 @@
-class ClientController < ApplicationController
+class ClientsController < ApplicationController
+
+  def index
+    respond_to do |format|
+      format.json { render json: Client.all}
+    end
+  end
 
   def create
-    client = Client.new(client_parameters[:client])
+    client = Client.new(client_parameters)
     if client.save
       respond_to do |format|
         format.json { render json: client}
@@ -12,7 +18,7 @@ class ClientController < ApplicationController
   private
 
   def client_parameters
-    params.require(:client).permit(:first_name, :last_name, :dob, :gender)
+    params.require(:client).permit(:first_name, :last_name, :dob, :male_gender)
   end
 
 end
