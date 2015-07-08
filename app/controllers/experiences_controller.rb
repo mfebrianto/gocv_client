@@ -10,8 +10,13 @@ class ExperiencesController < ApplicationController
   end
 
   def client
-    exps = Experience.find_by_client_id(client_parameter)
-    Rails.logger.info ">>>>>exps>>>#{exps}"
+    exps = []
+    exps.concat(Experience.where(client_id: client_parameter))
+    unless exps.empty?
+      respond_to do |format|
+        format.json { render json: exps}
+      end
+    end
   end
 
   private
