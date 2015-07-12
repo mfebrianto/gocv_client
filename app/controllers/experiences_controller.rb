@@ -1,15 +1,24 @@
 class ExperiencesController < ApplicationController
 
   def create
-    experience = Experience.new(experience_parameter)
-    if experience.save
+    exp = Experience.new(experience_parameter)
+    if exp.save
       respond_to do |format|
-        format.json { render json: experience}
+        format.json { render json: exp}
       end
     end
   end
 
+  def client
+    exps = Experience.find_by_client_id(client_parameter)
+    Rails.logger.info ">>>>>exps>>>#{exps}"
+  end
+
   private
+
+  def client_parameter
+    params.require(:id)
+  end
 
   def experience_parameter
     params.require(:experience).permit(:client_id, :company_name, :position,

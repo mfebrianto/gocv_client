@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   #   resources :products
   scope "/my-account" do
     resources :clients
-    resources :experiences
+    resources :experiences do
+      get 'client', on: :member
+    end
   end
   # Example resource route with options:
   #   resources :products do
