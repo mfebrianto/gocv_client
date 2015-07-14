@@ -21,7 +21,20 @@ class ClientsController < ApplicationController
     end
   end
 
+  def update
+    client = Client.find(client_parameters_update[:id])
+    if client.update_attributes(client_parameters_update)
+      respond_to do |format|
+        format.json { render json: client}
+      end
+    end
+  end
+
   private
+
+  def client_parameters_update
+    params.require(:client).permit(:id, :first_name, :last_name, :dob, :male_gender)
+  end
 
   def client_parameters
     params.require(:client).permit(:first_name, :last_name, :dob, :male_gender)
