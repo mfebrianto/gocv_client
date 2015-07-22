@@ -18,6 +18,15 @@ class ExperiencesController < ApplicationController
     end
   end
 
+  def destroy
+    exp = Experience.find(single_exp_parameter)
+    if exp.delete
+      respond_to do |format|
+        format.json { render status: :ok, json: {}}
+      end
+    end
+  end
+
   def update
     exp = Experience.find(client_parameters_update['id'])
     if exp.update_attributes(client_parameters_update)
