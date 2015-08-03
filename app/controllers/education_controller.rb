@@ -1,5 +1,5 @@
 class EducationController < ApplicationController
-  
+
   def create
     education = Client.new(edu_parameters)
     if education.save

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   #   resources :products
   scope "/my-account" do
     resources :clients
+    resources :educations
     resources :experiences do
       get 'client', on: :member
     end
