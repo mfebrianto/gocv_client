@@ -18,6 +18,15 @@ class EducationsController < ApplicationController
     end
   end
 
+  def update
+    edu = Education.find(client_parameters_update['id'])
+    if edu.update_attributes(client_parameters_update)
+      respond_to do |format|
+        format.json { render json: edu}
+      end
+    end
+  end
+
   def client
     edus = []
     edus.concat(Education.where(client_id: client_parameter))
@@ -41,6 +50,11 @@ class EducationsController < ApplicationController
 
   def single_edu_parameter
     params.require(:id)
+  end
+
+  def client_parameters_update
+    params.require(:education).permit(:id, :school_name, :city, :country, :start, :end,
+                                      :faculty, :client_id)
   end
 
 end
