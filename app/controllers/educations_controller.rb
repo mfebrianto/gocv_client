@@ -1,7 +1,7 @@
-class EducationController < ApplicationController
+class EducationsController < ApplicationController
 
   def create
-    education = Client.new(edu_parameters)
+    education = Education.new(edu_parameters)
     if education.save
       respond_to do |format|
         format.json { render json: education}
@@ -12,7 +12,7 @@ class EducationController < ApplicationController
   private
 
   def edu_parameters
-    params.require(:experience).permit(:school_name, :city, :country, :start, :end,
+    params.require(:education).permit(:school_name, :city, :country, :start, :end,
                                        :faculty, :client_id)
   end
 
