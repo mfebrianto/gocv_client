@@ -12,8 +12,11 @@ class ExperiencesController < ApplicationController
   def show
     exp = Experience.find(single_exp_parameter)
     if exp.present?
+      exp_hash = exp.attributes
+      exp_hash['started_on'] = exp.started_on.strftime('%d/%m/%Y')
+      exp_hash['ended_on'] = exp.ended_on.strftime('%d/%m/%Y')
       respond_to do |format|
-        format.json { render json: exp}
+        format.json { render json: exp_hash}
       end
     end
   end

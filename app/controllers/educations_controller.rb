@@ -47,6 +47,15 @@ class EducationsController < ApplicationController
     end
   end
 
+  def destroy
+    edu = Education.find(single_edu_parameter)
+    if edu.delete
+      respond_to do |format|
+        format.json { render status: :ok, json: {}}
+      end
+    end
+  end
+
   private
 
   def edu_parameters
