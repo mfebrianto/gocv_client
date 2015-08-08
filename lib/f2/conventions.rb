@@ -3,7 +3,7 @@ module F2
   class Conventions
 
     def self.date
-      '%d/%m/%y'
+      '%d/%m/%Y'
     end
 
   end

@@ -16,8 +16,8 @@ class EducationsController < ApplicationController
     edu = Education.find(single_edu_parameter)
     if edu.present?
       edu_hash = edu.attributes
-      edu_hash['start'] = edu.start.strftime('%d/%m/%y')
-      edu_hash['end'] = edu.start.strftime('%d/%m/%y')
+      edu_hash['start'] = edu.start.strftime(F2::Conventions.date)
+      edu_hash['end'] = edu.start.strftime(F2::Conventions.date)
       respond_to do |format|
         format.json { render json: edu_hash}
       end
@@ -38,10 +38,8 @@ class EducationsController < ApplicationController
   def client
     edus = []
     edus.concat(Education.where(params[:id]))
-    unless edus.empty?
-      respond_to do |format|
-        format.json { render json: edus}
-      end
+    respond_to do |format|
+      format.json { render json: edus}
     end
   end
 
@@ -57,8 +55,8 @@ class EducationsController < ApplicationController
   private
 
   def parse_date(edu)
-    edu.start = Date.strptime(edu_parameters['start'], '%d/%m/%y')
-    edu.end = Date.strptime(edu_parameters['end'], '%d/%m/%y')
+    edu.start = Date.strptime(edu_parameters['start'], F2::Conventions.date)
+    edu.end = Date.strptime(edu_parameters['end'], F2::Conventions.date)
   end
 
   def edu_parameters

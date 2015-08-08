@@ -45,10 +45,8 @@ class ExperiencesController < ApplicationController
   def client
     exps = []
     exps.concat(Experience.where(client_id: client_parameter))
-    unless exps.empty?
-      respond_to do |format|
-        format.json { render json: exps}
-      end
+    respond_to do |format|
+      format.json { render json: exps}
     end
   end
 
