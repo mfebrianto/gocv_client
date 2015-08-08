@@ -1,10 +1,14 @@
+require 'f2/conventions'
+
 class EducationsController < ApplicationController
 
   def create
-    education = Education.new(edu_parameters)
-    if education.save
+    edu = Education.new(edu_parameters)
+    edu.start = Date.parse(edu_parameters['start'])
+    edu.end = Date.parse(edu_parameters['end'])
+    if edu.save
       respond_to do |format|
-        format.json { render json: education}
+        format.json { render json: edu}
       end
     end
   end
@@ -12,15 +16,21 @@ class EducationsController < ApplicationController
   def show
     edu = Education.find(single_edu_parameter)
     if edu.present?
+      edu_hash = edu.attributes
+      edu_hash['start'] = edu.start.strftime('%d/%m/%Y')
+      edu_hash['end'] = edu.start.strftime('%d/%m/%Y')
       respond_to do |format|
-        format.json { render json: edu}
+        format.json { render json: edu_hash}
       end
     end
   end
 
   def update
     edu = Education.find(client_parameters_update['id'])
-    if edu.update_attributes(client_parameters_update)
+    edu.assign_attributes(client_parameters_update)
+    edu.start = Date.parse(edu_parameters['start'])
+    edu.end = Date.parse(edu_parameters['end'])
+    if edu.save
       respond_to do |format|
         format.json { render json: edu}
       end
@@ -29,7 +39,7 @@ class EducationsController < ApplicationController
 
   def client
     edus = []
-    edus.concat(Education.where(client_id: client_parameter))
+    edus.concat(Education.where(params[:id]))
     unless edus.empty?
       respond_to do |format|
         format.json { render json: edus}
@@ -54,7 +64,7 @@ class EducationsController < ApplicationController
 
   def client_parameters_update
     params.require(:education).permit(:id, :school_name, :city, :country, :start, :end,
-                                      :faculty, :client_id)
+                                      :faculty)
   end
 
 end
