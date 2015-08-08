@@ -4,8 +4,7 @@ class EducationsController < ApplicationController
 
   def create
     edu = Education.new(edu_parameters)
-    edu.start = Date.parse(edu_parameters['start'])
-    edu.end = Date.parse(edu_parameters['end'])
+    parse_date(edu)
     if edu.save
       respond_to do |format|
         format.json { render json: edu}
@@ -17,8 +16,8 @@ class EducationsController < ApplicationController
     edu = Education.find(single_edu_parameter)
     if edu.present?
       edu_hash = edu.attributes
-      edu_hash['start'] = edu.start.strftime('%d/%m/%Y')
-      edu_hash['end'] = edu.start.strftime('%d/%m/%Y')
+      edu_hash['start'] = edu.start.strftime('%d/%m/%y')
+      edu_hash['end'] = edu.start.strftime('%d/%m/%y')
       respond_to do |format|
         format.json { render json: edu_hash}
       end
@@ -28,8 +27,7 @@ class EducationsController < ApplicationController
   def update
     edu = Education.find(client_parameters_update['id'])
     edu.assign_attributes(client_parameters_update)
-    edu.start = Date.parse(edu_parameters['start'])
-    edu.end = Date.parse(edu_parameters['end'])
+    parse_date(edu)
     if edu.save
       respond_to do |format|
         format.json { render json: edu}
@@ -57,6 +55,11 @@ class EducationsController < ApplicationController
   end
 
   private
+
+  def parse_date(edu)
+    edu.start = Date.strptime(edu_parameters['start'], '%d/%m/%y')
+    edu.end = Date.strptime(edu_parameters['end'], '%d/%m/%y')
+  end
 
   def edu_parameters
     params.require(:education).permit(:school_name, :city, :country, :start, :end,
