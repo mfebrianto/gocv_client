@@ -21,6 +21,10 @@ class ClientsController < ApplicationController
     end
   end
 
+  def upload_photo
+    client_interactor = ClientInteractor.new
+  end
+
   def update
     client = Client.find(client_parameters_update[:id])
     if client.update_attributes(client_parameters_update)
