@@ -11,15 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803223744) do
+ActiveRecord::Schema.define(version: 20150829024428) do
 
   create_table "clients", force: :cascade do |t|
-    t.string   "first_name",  limit: 255
-    t.string   "last_name",   limit: 255
+    t.string   "first_name",                   limit: 255
+    t.string   "last_name",                    limit: 255
     t.datetime "dob"
     t.boolean  "male_gender"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "profile_picture_file_name",    limit: 255
+    t.string   "profile_picture_content_type", limit: 255
+    t.integer  "profile_picture_file_size",    limit: 4
+    t.datetime "profile_picture_updated_at"
   end
 
   create_table "educations", force: :cascade do |t|
