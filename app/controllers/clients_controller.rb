@@ -22,7 +22,12 @@ class ClientsController < ApplicationController
   end
 
   def upload_photo
-    client_interactor = ClientInteractor.new
+    p ">>>>>>>>>>>>>>>>#{upload_photo_params.inspect}"
+    client = Client.new(profile_picture: upload_photo_params)
+    client_interactor = ClientInteractor.new({client: client})
+    respond_to do |format|
+      format.json { render status: :ok, json: {}}
+    end
   end
 
   def update
@@ -46,6 +51,10 @@ class ClientsController < ApplicationController
 
   def client_id_parameter
     params.require(:id)
+  end
+
+  def upload_photo_params
+    params.require(:file)
   end
 
 end
