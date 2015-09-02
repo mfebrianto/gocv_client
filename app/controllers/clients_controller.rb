@@ -23,8 +23,9 @@ class ClientsController < ApplicationController
 
   def upload_photo
     p ">>>>>>>>>>>>>>>>#{upload_photo_params.inspect}"
-    client = Client.new(profile_picture: upload_photo_params)
-    client_interactor = ClientInteractor.new({client: client})
+    client = Client.new(profile_picture: upload_photo_params[:file])
+    client_interactor = ClientInteractor.new({client: client, session_id: upload_photo_params[:session_id]})
+    # client_interactor.save_photo
     respond_to do |format|
       format.json { render status: :ok, json: {}}
     end
@@ -54,7 +55,7 @@ class ClientsController < ApplicationController
   end
 
   def upload_photo_params
-    params.require(:file)
+    params.permit(:session_id, :file)
   end
 
 end

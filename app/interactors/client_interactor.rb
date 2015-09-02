@@ -8,4 +8,9 @@ class ClientInteractor
     end
   end
 
+  def save_photo
+    @client.save
+
+  end
+
 end
