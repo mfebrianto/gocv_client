@@ -9,8 +9,9 @@ class ClientInteractor
   end
 
   def save_photo
-    @client.save
-
+    # check session id tied to user or not
+      # yes: update photo of that user
+      # no : create new user, save photo and pass back temporary user id
   end
 
 end

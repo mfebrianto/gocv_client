@@ -22,6 +22,7 @@ class ClientsController < ApplicationController
   end
 
   def upload_photo
+    p ">>>>>>>session>>>>>>>>>#{session.id}"
     p ">>>>>>>>>>>>>>>>#{upload_photo_params.inspect}"
     client = Client.new(profile_picture: upload_photo_params[:file])
     client_interactor = ClientInteractor.new({client: client, session_id: upload_photo_params[:session_id]})
