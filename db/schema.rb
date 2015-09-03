@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829024428) do
+ActiveRecord::Schema.define(version: 20150903120350) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",                   limit: 255
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20150829024428) do
     t.datetime "started_on"
     t.datetime "ended_on"
     t.boolean  "current_job"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scratches", force: :cascade do |t|
+    t.string   "client_id",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
